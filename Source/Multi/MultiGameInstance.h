@@ -21,21 +21,21 @@ private:
 	//** Initialise **//
 	virtual void Init();
 
+	//** Load the Main Menu **//
+	UFUNCTION(BlueprintCallable, Category = "Menu")
+		void LoadMenu();
+
+	//** Load the in game menu **//
+	UFUNCTION(BlueprintCallable, Category = "Menu")
+		void LoadInGameMenu();
+
+	//** Join Server on given IP Address **//
 	UFUNCTION(Exec)
-	//** Join Server on IP Address **//
 	virtual void Join(const FString& Address) override;
 
 	//** Host the session **//
 	UFUNCTION(Exec)
 	virtual void Host() override;
-
-	//** Load the Main Menu **//
-	UFUNCTION(BlueprintCallable, Category = "Menu")
-	void LoadMenu();
-
-	//** Load the in game menu **//
-	UFUNCTION(BlueprintCallable, Category = "Menu")
-	void LoadInGameMenu();
 
 	//** Loads the main menu from the in game menu **//
 	virtual void LoadMainMenu() override;

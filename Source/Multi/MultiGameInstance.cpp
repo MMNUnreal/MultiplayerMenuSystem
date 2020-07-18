@@ -33,6 +33,28 @@ void UMultiGameInstance::Init()
 	
 }
 
+//** Add Menu Widget to viewport **//
+void UMultiGameInstance::LoadMenu()
+{
+	if (!ensure(MenuClass != nullptr)) return;
+	Menu = CreateWidget<UMainMenu>(this, MenuClass);
+
+	if (!ensure(Menu != nullptr)) return;
+	Menu->Setup();
+	Menu->SetMenuInterface(this);
+}
+
+//** Add In Game Menu Widget to viewport **//
+void UMultiGameInstance::LoadInGameMenu()
+{
+	if (!ensure(InGameMenuClass != nullptr)) return;
+	InGameMenu = CreateWidget<UMenuWidget>(this, InGameMenuClass);
+
+	if (!ensure(InGameMenu != nullptr)) return;
+	InGameMenu->Setup();
+	InGameMenu->SetMenuInterface(this);
+}
+
 //** Host server **//
 void UMultiGameInstance::Host()
 {
@@ -69,29 +91,7 @@ void UMultiGameInstance::Join(const FString& Address)
 	PlayerController->ClientTravel(Address, ETravelType::TRAVEL_Absolute);
 }
 
-//** Add Menu Widget to viewport **//
-void UMultiGameInstance::LoadMenu()
-{
-	if(!ensure(MenuClass != nullptr)) return;
-	Menu = CreateWidget<UMainMenu>(this, MenuClass); 
-
-	if(!ensure(Menu != nullptr)) return;
-	Menu->Setup();
-	Menu->SetMenuInterface(this);
-}
-
-//** Add In Game Menu Widget to viewport **//
-void UMultiGameInstance::LoadInGameMenu()
-{
-	if (!ensure(InGameMenuClass != nullptr)) return;
-	InGameMenu = CreateWidget<UMenuWidget>(this, InGameMenuClass);
-
-	if (!ensure(InGameMenu != nullptr)) return;
-	InGameMenu->Setup();
-	InGameMenu->SetMenuInterface(this);
-}
-
-//** When loading main menu after exiting in game menu
+//** When loading main menu after exiting in game menu, travel back to MainMenu map which loads ManMenu on beginplay
 void UMultiGameInstance::LoadMainMenu()
 {
 	UWorld* World = GetWorld();
